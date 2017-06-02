@@ -2,26 +2,28 @@ import React, {Component} from 'react';
 
 class Message extends Component {
   render() {
+    console.log("Rendering <Message/>");
     let result
     let { message } = this.props
-    console.log(this.props)
-    if ( message.newName ){
-      console.log('in system message')
-      result = (
+    switch (message.type) {
+      case "incomingNotification":
+        return (
           <div className="message system">
-            {message.username} changed their name to {message.newName}.
+            {message.content}
           </div>
         )
-    } else {
-      console.log('in message')
-      result = (
+        break
+      case "incomingMessage":
+        return (
           <div className="message">
-            <span className="message-username">{ message.username }</span>
-            <span className="message-content">{ message.content }</span>
+            <span className="message-username" style={{color: message.colour}}>{ message.username }</span>
+            <span className="message-content" dangerouslySetInnerHTML={{__html: message.content}} ></span>
           </div>
         )
+        break
+      default:
+        throw new Error("Unknown event type " + message.type);
     }
-    return result;
   }
 }
 
