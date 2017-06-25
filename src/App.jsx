@@ -44,7 +44,7 @@ class App extends Component {
 
   componentDidMount() {
     // console.log('App did mount')
-    this.socket = new WebSocket("ws://localhost:3001")
+    this.socket = new WebSocket(`ws://${window.location.hostname}:3001`)
 
     this.socket.onopen = function (event) {
       console.log('connected to server');
